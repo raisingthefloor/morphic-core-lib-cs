@@ -1,0 +1,14 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <Authors>Raising the Floor - US, Inc.</Authors>
+    <Company>Raising the Floor - US, Inc.Raising the Floor - US, Inc.</Company>
+    <Product>Morphic Core Support Library</Product>
+    <Copyright>Copyright 2021 Raising the Floor - US, Inc.</Copyright>
+    <PackageLicenseExpression>BSD-3-Clause</PackageLicenseExpression>
+    <RepositoryUrl>https://github.com/raisingthefloor/morphic-core-lib-cs</RepositoryUrl>
+  </PropertyGroup>
+
+</Project>
