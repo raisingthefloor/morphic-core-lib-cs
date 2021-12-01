@@ -48,7 +48,7 @@ namespace Morphic.Core
                 var fieldInfo = typeof(TEnum).GetField(memberName!);
                 //
                 var attribute = fieldInfo!.GetCustomAttribute<Morphic.Core.MorphicStringValueAttribute>();
-                if (attribute == null)
+                if (attribute is null)
                 {
                     // this enum member does not have a string value
                     continue;
@@ -70,7 +70,7 @@ namespace Morphic.Core
         public static string? ToStringValue<TEnum>(this TEnum value) where TEnum : Enum
         {
             var memberName = typeof(TEnum).GetEnumName(value);
-            if (memberName == null)
+            if (memberName is null)
             {
                 // member does not exist
                 return null;
@@ -79,7 +79,7 @@ namespace Morphic.Core
             var fieldInfo = typeof(TEnum).GetField(memberName);
             //
             var attribute = fieldInfo!.GetCustomAttribute<Morphic.Core.MorphicStringValueAttribute>();
-            if (attribute == null)
+            if (attribute is null)
             {
                 // this enum member does not have a string value
                 return null;
