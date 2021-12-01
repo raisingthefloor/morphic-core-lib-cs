@@ -25,11 +25,19 @@ using System;
 
 namespace Morphic.Core
 {
-    public partial class MorphicEnum<TEnum> where TEnum : struct, Enum
+    // MorphicUnhandledErrorException is just used to catch anywhere that we forget to capture an error result; we throw it in a "default" block following our error handling
+    public class MorphicUnhandledErrorException : Exception
     {
-        public static bool IsMember(TEnum value)
+        public object? Error { get; private set; }
+
+        public MorphicUnhandledErrorException()
         {
-            return (typeof(TEnum).GetEnumName(value) is not null);
+            this.Error = null;
+        }
+
+        public MorphicUnhandledErrorException(object error)
+        {
+            this.Error = error;
         }
     }
 }
