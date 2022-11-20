@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Raising the Floor - US, Inc.
+﻿// Copyright 2021-2022 Raising the Floor - US, Inc.
 //
 // Licensed under the New BSD license. You may not use this file except in
 // compliance with this License.
@@ -23,13 +23,12 @@
 
 using System;
 
-namespace Morphic.Core
+namespace Morphic.Core;
+
+public partial class MorphicEnum<TEnum> where TEnum : struct, Enum
 {
-    public partial class MorphicEnum<TEnum> where TEnum : struct, Enum
+    public static bool IsMember(TEnum value)
     {
-        public static bool IsMember(TEnum value)
-        {
-            return (typeof(TEnum).GetEnumName(value) is not null);
-        }
+        return (typeof(TEnum).GetEnumName(value) is not null);
     }
 }

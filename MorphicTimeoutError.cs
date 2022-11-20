@@ -1,4 +1,4 @@
-﻿// Copyright 2021-2022 Raising the Floor - US, Inc.
+// Copyright 2022 Raising the Floor - US, Inc.
 //
 // Licensed under the New BSD license. You may not use this file except in
 // compliance with this License.
@@ -21,8 +21,28 @@
 // * Adobe Foundation
 // * Consumer Electronics Association Foundation
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Morphic.Core;
 
-public struct MorphicUnit
+public record MorphicTimeoutError : MorphicAssociatedValueEnum<MorphicTimeoutError.Values>
 {
+    // enum members
+    public enum Values
+    {
+        Timeout,
+    }
+
+    // functions to create member instances
+    public static MorphicTimeoutError Timeout => new(Values.Timeout);
+
+    // associated values
+
+    // verbatim required constructor implementation for MorphicAssociatedValueEnums
+    private MorphicTimeoutError(Values value) : base(value) { }
 }

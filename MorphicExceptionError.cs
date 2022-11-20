@@ -1,4 +1,4 @@
-﻿// Copyright 2021-2022 Raising the Floor - US, Inc.
+// Copyright 2022 Raising the Floor - US, Inc.
 //
 // Licensed under the New BSD license. You may not use this file except in
 // compliance with this License.
@@ -21,8 +21,29 @@
 // * Adobe Foundation
 // * Consumer Electronics Association Foundation
 
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
 namespace Morphic.Core;
 
-public struct MorphicUnit
+public record MorphicExceptionError : MorphicAssociatedValueEnum<MorphicExceptionError.Values>
 {
+    // enum members
+    public enum Values
+    {
+        ExceptionError/*(Exception ex)*/,
+    }
+
+    // functions to create member instances
+    public static MorphicExceptionError ExceptionError(Exception ex) => new(Values.ExceptionError) {  Exception = ex };
+
+    // associated values
+    public Exception? Exception { get; private set; }
+
+    // verbatim required constructor implementation for MorphicAssociatedValueEnums
+    private MorphicExceptionError(Values value) : base(value) { }
 }

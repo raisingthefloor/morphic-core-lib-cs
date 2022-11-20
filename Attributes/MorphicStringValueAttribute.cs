@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Raising the Floor - US, Inc.
+﻿// Copyright 2021-2022 Raising the Floor - US, Inc.
 //
 // Licensed under the New BSD license. You may not use this file except in
 // compliance with this License.
@@ -24,67 +24,66 @@
 using System;
 using System.Reflection;
 
-namespace Morphic.Core
+namespace Morphic.Core;
+
+[System.AttributeUsage(AttributeTargets.Field)]
+public class MorphicStringValueAttribute : Attribute
 {
-    [System.AttributeUsage(AttributeTargets.Field)]
-    public class MorphicStringValueAttribute : Attribute
-    {
-        public string StringValue;
+    public string StringValue;
 
-        public MorphicStringValueAttribute(string stringValue)
-        {
-            this.StringValue = stringValue;
-        }
+    public MorphicStringValueAttribute(string stringValue)
+    {
+        this.StringValue = stringValue;
     }
+}
 
-    public partial class MorphicEnum<TEnum> where TEnum : struct, Enum
+public partial class MorphicEnum<TEnum> where TEnum : struct, Enum
+{
+    public static TEnum? FromStringValue(string stringValue, StringComparison comparisonType = StringComparison.Ordinal)
     {
-        public static TEnum? FromStringValue(string stringValue, StringComparison comparisonType = StringComparison.Ordinal)
+        foreach (TEnum member in System.Enum.GetValues(typeof(TEnum)))
         {
-            foreach (TEnum member in System.Enum.GetValues(typeof(TEnum)))
-            {
-                var memberName = typeof(TEnum).GetEnumName(member);
-                //
-                var fieldInfo = typeof(TEnum).GetField(memberName!);
-                //
-                var attribute = fieldInfo!.GetCustomAttribute<Morphic.Core.MorphicStringValueAttribute>();
-                if (attribute is null)
-                {
-                    // this enum member does not have a string value
-                    continue;
-                }
-
-                if (attribute.StringValue.Equals(stringValue, comparisonType))
-                {
-                    return member;
-                }
-            }
-
-            // if we could not find the member (i.e. the member with the supplied string value does not exist), return null
-            return null;
-        }
-    }
-
-    public static partial class MorphicExtensions
-    {
-        public static string? ToStringValue<TEnum>(this TEnum value) where TEnum : Enum
-        {
-            var memberName = typeof(TEnum).GetEnumName(value);
-            if (memberName is null)
-            {
-                // member does not exist
-                return null;
-            }
+            var memberName = typeof(TEnum).GetEnumName(member);
             //
-            var fieldInfo = typeof(TEnum).GetField(memberName);
+            var fieldInfo = typeof(TEnum).GetField(memberName!);
             //
             var attribute = fieldInfo!.GetCustomAttribute<Morphic.Core.MorphicStringValueAttribute>();
             if (attribute is null)
             {
                 // this enum member does not have a string value
-                return null;
+                continue;
             }
-            return attribute.StringValue;
+
+            if (attribute.StringValue.Equals(stringValue, comparisonType))
+            {
+                return member;
+            }
         }
+
+        // if we could not find the member (i.e. the member with the supplied string value does not exist), return null
+        return null;
+    }
+}
+
+public static partial class MorphicExtensions
+{
+    public static string? ToStringValue<TEnum>(this TEnum value) where TEnum : Enum
+    {
+        var memberName = typeof(TEnum).GetEnumName(value);
+        if (memberName is null)
+        {
+            // member does not exist
+            return null;
+        }
+        //
+        var fieldInfo = typeof(TEnum).GetField(memberName);
+        //
+        var attribute = fieldInfo!.GetCustomAttribute<Morphic.Core.MorphicStringValueAttribute>();
+        if (attribute is null)
+        {
+            // this enum member does not have a string value
+            return null;
+        }
+        return attribute.StringValue;
     }
 }

@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Raising the Floor - US, Inc.
+﻿// Copyright 2021-2022 Raising the Floor - US, Inc.
 //
 // Licensed under the New BSD license. You may not use this file except in
 // compliance with this License.
@@ -23,21 +23,20 @@
 
 using System;
 
-namespace Morphic.Core
+namespace Morphic.Core;
+
+// MorphicUnhandledErrorException is just used to catch anywhere that we forget to capture an error result; we throw it in a "default" block following our error handling
+public class MorphicUnhandledErrorException : Exception
 {
-    // MorphicUnhandledErrorException is just used to catch anywhere that we forget to capture an error result; we throw it in a "default" block following our error handling
-    public class MorphicUnhandledErrorException : Exception
+    public object? Error { get; private set; }
+
+    public MorphicUnhandledErrorException()
     {
-        public object? Error { get; private set; }
+        this.Error = null;
+    }
 
-        public MorphicUnhandledErrorException()
-        {
-            this.Error = null;
-        }
-
-        public MorphicUnhandledErrorException(object error)
-        {
-            this.Error = error;
-        }
+    public MorphicUnhandledErrorException(object error)
+    {
+        this.Error = error;
     }
 }

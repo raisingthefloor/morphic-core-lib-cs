@@ -1,4 +1,4 @@
-﻿// Copyright 2021 Raising the Floor - US, Inc.
+﻿// Copyright 2021-2022 Raising the Floor - US, Inc.
 //
 // Licensed under the New BSD license. You may not use this file except in
 // compliance with this License.
@@ -23,20 +23,19 @@
 
 using System;
 
-namespace Morphic.Core
+namespace Morphic.Core;
+
+public abstract record MorphicAssociatedValueEnum<TValue> where TValue : struct, Enum
 {
-    public abstract record MorphicAssociatedValueEnum<TValue> where TValue : struct, Enum
+    public TValue Value { get; private set; }
+
+    protected MorphicAssociatedValueEnum(TValue value)
     {
-        public TValue Value { get; private set; }
+        this.Value = value;
+    }
 
-        protected MorphicAssociatedValueEnum(TValue value)
-        {
-            this.Value = value;
-        }
-
-        public static bool IsMember(TValue value)
-        {
-            return MorphicEnum<TValue>.IsMember(value);
-        }
+    public static bool IsMember(TValue value)
+    {
+        return MorphicEnum<TValue>.IsMember(value);
     }
 }
