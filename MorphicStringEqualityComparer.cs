@@ -26,7 +26,7 @@ using System.Collections.Generic;
 
 namespace Morphic.Core;
 
-internal class MorphicStringEqualityComparer : IEqualityComparer<string>
+public class MorphicStringEqualityComparer : IEqualityComparer<string>
 {
      StringComparison ComparisonType;
 
